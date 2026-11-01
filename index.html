@@ -1,0 +1,286 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Findr — Lost & Found Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- SVG icon sprite -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+      <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3.3 7.5L12 12.5l8.7-5M12 22V12.5"/></symbol>
+      <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.07 0l2.83-2.83a5 5 0 00-7.07-7.07L11.5 4.4"/><path d="M14 11a5 5 0 00-7.07 0L4.1 13.83a5 5 0 007.07 7.07l1.33-1.3"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a1 1 0 011-1h6a1 1 0 011 1v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6M10 11v6M14 11v6"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+      <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></symbol>
+      <symbol id="i-trend" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    </defs>
+  </svg>
+
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg class="ic"><use href="#i-search"/></svg>
+        </div>
+        <div>
+          <h1>Findr</h1>
+          <span>Lost &amp; Found</span>
+        </div>
+        <button class="icon-btn only-mobile" id="closeSidebar" aria-label="Close menu">
+          <svg class="ic"><use href="#i-x"/></svg>
+        </button>
+      </div>
+
+      <nav class="nav" id="nav">
+        <span class="nav-label">Menu</span>
+        <button class="nav-item active" data-view="overview">
+          <svg class="ic"><use href="#i-grid"/></svg> Overview
+        </button>
+        <button class="nav-item" data-view="items">
+          <svg class="ic"><use href="#i-box"/></svg> All Items
+          <span class="badge" id="navItemsCount">0</span>
+        </button>
+        <button class="nav-item" data-view="matches">
+          <svg class="ic"><use href="#i-link"/></svg> Matches
+          <span class="badge accent" id="navMatchCount">0</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-card">
+        <h4>Found something?</h4>
+        <p>Report it in seconds and help someone get their belongings back.</p>
+        <button class="btn btn-light" data-open-modal>
+          <svg class="ic"><use href="#i-plus"/></svg> Report item
+        </button>
+      </div>
+
+      <div class="profile">
+        <div class="avatar">AH</div>
+        <div>
+          <strong>Admin</strong>
+          <span>Campus Help Desk</span>
+        </div>
+      </div>
+    </aside>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main -->
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn only-mobile" id="openSidebar" aria-label="Open menu">
+          <svg class="ic"><use href="#i-menu"/></svg>
+        </button>
+
+        <div class="search">
+          <svg class="ic"><use href="#i-search"/></svg>
+          <input type="search" id="globalSearch" placeholder="Search items, places, categories…" autocomplete="off" />
+        </div>
+
+        <div class="top-actions">
+          <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+            <svg class="ic" id="themeIcon"><use href="#i-moon"/></svg>
+          </button>
+          <button class="icon-btn has-dot" aria-label="Notifications">
+            <svg class="ic"><use href="#i-bell"/></svg>
+          </button>
+          <button class="btn btn-primary hide-mobile" data-open-modal>
+            <svg class="ic"><use href="#i-plus"/></svg> Report item
+          </button>
+        </div>
+      </header>
+
+      <div class="content">
+
+        <!-- OVERVIEW -->
+        <section class="view active" id="view-overview">
+          <div class="page-head">
+            <div>
+              <h2 id="greeting">Welcome back 👋</h2>
+              <p>Here’s what’s happening with lost and found items today.</p>
+            </div>
+            <button class="btn btn-primary only-mobile-flex" data-open-modal>
+              <svg class="ic"><use href="#i-plus"/></svg> Report item
+            </button>
+          </div>
+
+          <div class="stats" id="stats"></div>
+
+          <div class="grid-2">
+            <article class="card">
+              <div class="card-head">
+                <div>
+                  <h3>Weekly activity</h3>
+                  <p>Items reported in the last 7 days</p>
+                </div>
+                <div class="legend">
+                  <span><i class="dot lost"></i>Lost</span>
+                  <span><i class="dot found"></i>Found</span>
+                </div>
+              </div>
+              <div class="chart" id="chart"></div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <div>
+                  <h3>By category</h3>
+                  <p>Share of all reports</p>
+                </div>
+              </div>
+              <div class="donut-wrap">
+                <div class="donut" id="donut"><div class="donut-center"><strong id="donutTotal">0</strong><span>Total</span></div></div>
+                <ul class="donut-legend" id="donutLegend"></ul>
+              </div>
+            </article>
+          </div>
+
+          <div class="grid-2 alt">
+            <article class="card">
+              <div class="card-head">
+                <div>
+                  <h3>Recent reports</h3>
+                  <p>Latest items added to the system</p>
+                </div>
+                <button class="link-btn" data-view-link="items">View all →</button>
+              </div>
+              <div class="recent" id="recentList"></div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <div>
+                  <h3>Suggested matches</h3>
+                  <p>Lost items that may have been found</p>
+                </div>
+                <button class="link-btn" data-view-link="matches">See all →</button>
+              </div>
+              <div class="match-mini" id="matchMini"></div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ITEMS -->
+        <section class="view" id="view-items">
+          <div class="page-head">
+            <div>
+              <h2>All items</h2>
+              <p id="itemsSubtitle">Browse, filter and manage every report.</p>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="chips" id="typeChips">
+              <button class="chip active" data-type="all">All</button>
+              <button class="chip" data-type="lost">Lost</button>
+              <button class="chip" data-type="found">Found</button>
+              <button class="chip" data-type="resolved">Resolved</button>
+            </div>
+            <div class="selects">
+              <select id="categoryFilter" aria-label="Category"></select>
+              <select id="sortFilter" aria-label="Sort">
+                <option value="new">Newest first</option>
+                <option value="old">Oldest first</option>
+                <option value="az">A → Z</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="items-grid" id="itemsGrid"></div>
+        </section>
+
+        <!-- MATCHES -->
+        <section class="view" id="view-matches">
+          <div class="page-head">
+            <div>
+              <h2>Suggested matches</h2>
+              <p>We compare lost and found reports by category, keywords and location.</p>
+            </div>
+          </div>
+          <div class="matches" id="matchesList"></div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Report modal -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <h3 id="modalTitle">Report an item</h3>
+        <button class="icon-btn" id="closeModal" aria-label="Close">
+          <svg class="ic"><use href="#i-x"/></svg>
+        </button>
+      </div>
+
+      <form id="itemForm" novalidate>
+        <div class="type-toggle" id="typeToggle">
+          <button type="button" class="active" data-value="lost">I lost something</button>
+          <button type="button" data-value="found">I found something</button>
+        </div>
+
+        <div class="field">
+          <label for="fTitle">Item name</label>
+          <input id="fTitle" required placeholder="e.g. Black leather wallet" />
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="fCategory">Category</label>
+            <select id="fCategory" required></select>
+          </div>
+          <div class="field">
+            <label for="fDate">Date</label>
+            <input type="date" id="fDate" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="fLocation">Location</label>
+          <input id="fLocation" required placeholder="e.g. Main Library, 2nd floor" />
+        </div>
+
+        <div class="field">
+          <label for="fDesc">Description</label>
+          <textarea id="fDesc" rows="3" placeholder="Colour, brand, marks, anything that helps identify it"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="fContact">Contact</label>
+          <input id="fContact" placeholder="Email or phone number" />
+        </div>
+
+        <p class="form-error" id="formError" hidden></p>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="cancelModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit report</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
